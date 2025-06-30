@@ -6,3 +6,5 @@ databases
 asyncpg
 sqlalchemy
 python-dotenv
+PyJWT
+
