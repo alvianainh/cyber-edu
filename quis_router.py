@@ -141,12 +141,13 @@ async def get_my_quiz_results(current_user_email: str = Depends(get_current_user
 
     return [
         QuizResultOut(
-            id=str(r["id"]),           # convert ke string
-            user_id=str(r["user_id"]), # convert ke string
+            id=str(r["id"]),
             level=r["level"],
             score=r["score"],
-            answers=r["answers"],
-            created_at=r["created_at"].isoformat() if r["created_at"] else None,
+            total_questions=r["total_questions"] if r["total_questions"] is not None else 0,
+            percentage=float(r["percentage"]) if r["percentage"] is not None else 0.0,
+            time_spent=r["time_spent"] if r["time_spent"] is not None else 0,
+            created_at=r["created_at"],
         )
         for r in results
     ]
