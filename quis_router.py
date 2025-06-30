@@ -110,16 +110,17 @@ async def submit_quiz_result(
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+    query_select = quiz_results.select().where(quiz_results.c.id == quiz_id)
+    result = await database.fetch_one(query_select)
+
     return {
-        "id": quiz_id,
-        "user_id": str(user["id"]),
-        "level": quiz.level,
-        "score": quiz.score,
-        "total_questions": quiz.total_questions,
-        "percentage": quiz.percentage,
-        "time_spent": quiz.time_spent,
-        "answers": quiz.answers,
-        "created_at": None
+        "id": result["id"],
+        "level": result["level"],
+        "score": result["score"],
+        "total_questions": result["total_questions"],
+        "percentage": float(result["percentage"]),
+        "time_spent": result["time_spent"],
+        "created_at": result["created_at"],
     }
 
 
