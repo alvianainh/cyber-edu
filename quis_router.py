@@ -114,7 +114,7 @@ async def submit_quiz_result(
     result = await database.fetch_one(query_select)
 
     return {
-        "id": result["id"],
+        "id": str(result["id"]),               # <-- konversi UUID ke string di sini
         "level": result["level"],
         "score": result["score"],
         "total_questions": result["total_questions"],
