@@ -58,11 +58,17 @@ async def register_user(data: RegisterModel, db: Session = Depends(database.get_
         return {"error": "Email already registered"}
 
     hashed_pw = hash_password(data.password)
-    new_user = models.User(email=data.email, password=hashed_pw, full_name=data.full_name)
+    new_user = models.User(
+        email=data.email,
+        password=hashed_pw,
+        full_name=data.full_name,
+        role=data.role  # <-- tambahkan role di sini
+    )
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
     return {"message": "User registered successfully"}
+
 
 # -------------------------
 # GET USER BY EMAIL

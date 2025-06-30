@@ -8,3 +8,4 @@ sqlalchemy
 python-dotenv
 PyJWT
 psycopg2-binary
+pydantic[email]

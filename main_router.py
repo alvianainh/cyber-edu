@@ -34,12 +34,13 @@ async def login(data: LoginModel, db: Session = Depends(database.get_db)):
     if not user or not verify_password(data.password, user.password):
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
-    access_token = create_access_token(data={"sub": user.email})
+    access_token = create_access_token(data={"sub": user.email, "role": user.role})
     return {
         "access_token": access_token,
         "token_type": "bearer",
         "user": {
             "email": user.email,
-            "full_name": user.full_name
+            "full_name": user.full_name,
+            "role": user.role  # kirim role ke frontend
         }
     }
